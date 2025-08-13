@@ -16,7 +16,7 @@ app = Flask(__name__)
 API_KEY = "32b291920fff3166010c7ece34b0323b"
 
 print("Loading spaCy model...")
-nlp = spacy.load("en_core_web_md")
+nlp = spacy.load("en_core_web_sm")
 print("Model loaded.")
 
 KNOWN_CITIES = ["Tokyo", "London", "Berlin", "Cairo", "New York", "Phoenix", "Paris"]
