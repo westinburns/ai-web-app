@@ -1,0 +1,7 @@
+Flask is a micro web framework written in Python. It is classified as a microframework because it does not require particular tools or libraries. It has no database abstraction layer, form validation, or any other components where pre-existing third-party libraries provide common functions.
+
+A synapse is a structure in the nervous system that permits a neuron to pass an electrical or chemical signal to another neuron or to the target effector cell. Synapses are essential to the transmission of nervous impulses from one neuron to another.
+
+Signal flow in audio-visual systems refers to the path an audio or video signal takes from its source to its destination. For example, a video signal might flow from a Blu-ray player, through an HDMI cable, to an AV receiver, and finally out to a television screen. Understanding signal flow is critical for troubleshooting AV issues.
+
+Sentiment analysis is the use of natural language processing to identify, extract, and study affective states and subjective information. A common use is to determine a writer's attitude as positive, negative, or neutral.
