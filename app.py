@@ -100,36 +100,51 @@ def predict_intent(sentence):
 def home():
     return render_template("index.html")
 
-# THIS IS THE UPDATED ROUTE
+# THIS IS THE UPDATED CHAT ROUTE
 @app.route("/chat", methods=['POST'])
 def chat():
     user_message = request.json['message']
-    response_message = "" # Start with an empty response
+    response_message = ""
+
+    # --- NEW: Sentiment Analysis Step ---
+    blob = TextBlob(user_message)
+    sentiment = blob.sentiment # Gets polarity and subjectivity
     
+    # Predict the primary intent
     intent = predict_intent(user_message)
     
-    if intent == "weather":
+    # --- UPDATED: Action logic now considers sentiment ---
+    if intent == "greeting":
+        if sentiment.polarity > 0.3: # If user sounds positive
+            response_message = "Hello! You seem to be in a great mood. How can I assist you today?"
+        else:
+            response_message = "Hello! How can I help you today?"
+
+    elif intent == "goodbye":
+        if sentiment.polarity < -0.3: # If user sounds negative
+            response_message = "I'm sorry if I couldn't help more. I hope your day gets better. Goodbye."
+        else:
+            response_message = "Goodbye! Have a great day."
+
+    elif intent == "weather":
+        # (Weather logic from before, no changes needed)
         doc = nlp(user_message)
-        city = "Phoenix" # Default city
+        city = "Phoenix"
         for ent in doc.ents:
             if ent.label_ == 'GPE':
                 city = ent.text
                 break
         response_message = get_weather(city)
+
     elif intent == "joke":
-        response_message = "Why don't scientists trust atoms? Because they make up everything!"
-    elif intent == "greeting":
-        response_message = "Hello! How can I help you today?"
-    elif intent == "goodbye":
-        response_message = "Goodbye! Have a great day."
+        response_message = "Why did the scarecrow win an award? Because he was outstanding in his field!"
+        
     else:
         response_message = "I'm not sure how to respond to that yet."
 
     return jsonify({'response': response_message})
 
-
-if __name__ == "__main__":
-    # Make sure to have the model loading/training logic here from the full code block in the previous step
-    # For example: if os.path.exists(MODEL_SAVE_PATH): ... else: ...
-    app.run(debug=True)
 # --- Run the App ---
+if __name__ == "__main__":
+    # (Make sure your model loading/training logic is here)
+    app.run(debug=True)
